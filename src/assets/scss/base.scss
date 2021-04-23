@@ -1,0 +1,41 @@
+@import "globals/variables";
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: $font-family-ubuntu;
+  font-size: $font-size-3;
+  font-weight: $font-regular;
+  color: $color-black;
+  background: $color-grey-1;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: $font-family-ubuntu;
+}
+
+input,
+textarea {
+  &::placeholder {
+    font-family: $font-family-ubuntu;
+  }
+}
+
+button {
+  color: $color-black;
+  outline: none;
+}
+
+h1 {
+  margin: 0;
+}
+
+.bold {
+  font-weight: $font-bold;
+}
