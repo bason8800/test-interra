@@ -1,9 +1,12 @@
 <template>
   <div class="base-drawer">
     <div class="base-drawer__shadow" @click="$emit('close')"></div>
-    <div class="base-drawer__content">
-      <slot></slot>
-    </div>
+
+    <transition name="translate-x" appear>
+      <div class="base-drawer__content">
+        <slot></slot>
+      </div>
+    </transition>
   </div>
 </template>
 

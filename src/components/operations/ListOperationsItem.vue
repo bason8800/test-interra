@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, computed, PropType } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { OperationType } from '@/types/api/Operation';
@@ -49,8 +49,12 @@ export default defineComponent({
       router.push(`/edit-operation/${props.operation.id}`);
     };
 
+    const operationName = computed(
+      () => locale[OperationType[props.operation.type]],
+    );
+
     return {
-      operationName: locale[OperationType[props.operation.type]],
+      operationName,
 
       onChangeRoute,
     };

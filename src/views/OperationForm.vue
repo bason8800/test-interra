@@ -1,12 +1,10 @@
 <template>
   <BaseDrawer show @close="$router.go(-1)">
-    <form v-if="operation.id" class="operation-form">
+    <form v-if="isOperationCreated" class="operation-form">
       <div class="operation-form__content">
         <h1 class="operation-form__title">Добавление операции</h1>
 
         <OperationFieldDescription :field="field" />
-
-        <Datepicker :locale="ruLocale" />
 
         <div class="operation-form__value">
           <BaseSelect
@@ -17,10 +15,10 @@
         </div>
 
         <div class="operation-form__date-area">
-          <BaseInput
+          <BaseDatepicker
             label="Дата проведения"
             placeholder="Задайте"
-            use-calendar
+            input-format="dd.MM.yyyy"
             :model-value="operationDate"
             @update:modelValue="onChangeDate"
           />
@@ -81,16 +79,13 @@ import { useStore } from '@/store';
 
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseDrawer from '@/components/base/BaseDrawer.vue';
+import BaseDatepicker from '@/components/base/BaseDatepicker.vue';
 import BaseTextarea from '@/components/base/BaseTextarea.vue';
 import BaseInput from '@/components/base/BaseInput.vue';
 import BaseSelect from '@/components/base/BaseSelect.vue';
 
 import OperationFieldDescription from '@/components/operation-form/OperationFieldDescription.vue';
 import OperationQualitySwitcher from '@/components/operation-form/OperationQualitySwitcher.vue';
-
-import Datepicker from 'vue3-datepicker';
-
-import ruLocale from 'date-fns/locale/ru';
 
 const field: Field = {
   fieldId: 112,
@@ -114,15 +109,16 @@ const qualityLists: Array<QualityItem> = [
   },
 ];
 
-const createOperation = () => {
+const createOperation = (args: Partial<Operation> = {}) => {
   return new Operation({
-    id: `id_${Math.random()}`,
     type: OperationType.PLOWING,
     date: new TDate({ year: 2021, month: 3, day: 4 }),
     area: 10,
     comment: 'test',
     assessment: Assessment.EXCELLENT,
     completed: OperationCompletedType.COMPLETED,
+
+    ...args,
   });
 };
 
@@ -133,17 +129,17 @@ export default defineComponent({
     BaseDrawer,
     BaseTextarea,
     BaseInput,
+    BaseDatepicker,
     BaseSelect,
     OperationFieldDescription,
     OperationQualitySwitcher,
-    Datepicker,
   },
   setup() {
     const route = useRoute();
     const router = useRouter();
     const operation = ref({} as Operation);
 
-    const { dispatch } = useStore();
+    const { dispatch, state } = useStore();
 
     const options = computed(() => {
       const res = [] as OptionsList;
@@ -159,20 +155,33 @@ export default defineComponent({
     });
 
     const operationDate = computed(() => {
-      return `${operation.value.date.day}.${operation.value.date.month}.${operation.value.date.year}`;
+      const { day, month, year } = operation.value.date;
+
+      return new Date(year, month - 1, day);
+    });
+
+    const isOperationCreated = computed(() => {
+      if (!operation.value) {
+        return false;
+      }
+
+      return Object.keys(operation.value).length;
     });
 
     onMounted(async () => {
       const { id } = route.params;
+      const params = {
+        completed: state.operation.operationsType,
+      };
 
       if (!id) {
-        operation.value = createOperation();
+        operation.value = createOperation(params);
         return;
       }
 
       const res = await fieldService.getOperation(id as string);
 
-      operation.value = res || createOperation();
+      operation.value = res || createOperation(params);
     });
 
     const onAddOrUpdateOperation = async () => {
@@ -180,17 +189,11 @@ export default defineComponent({
       router.push('/');
     };
 
-    const onChangeDate = (val: string) => {
-      const pieces = val.split('.');
-
-      if (!pieces.length) {
-        return;
-      }
-
+    const onChangeDate = (date: Date) => {
       operation.value.date = new TDate({
-        year: +pieces[2],
-        day: +pieces[0],
-        month: +pieces[1],
+        year: date.getFullYear(),
+        day: date.getDate(),
+        month: date.getMonth() + 1,
       });
     };
 
@@ -200,10 +203,10 @@ export default defineComponent({
       operation,
       options,
       operationDate,
+      isOperationCreated,
 
       onAddOrUpdateOperation,
       onChangeDate,
-      ruLocale,
     };
   },
 });

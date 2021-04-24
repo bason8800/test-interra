@@ -38,14 +38,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, reactive, PropType } from 'vue';
+import { computed, defineComponent, onMounted, reactive, watch } from 'vue';
 
 import { useStore } from '@/store';
 import { ActionTypes } from '@/store/operation/actions';
 
 import { SortTypes } from '@/types';
 import { SortableOperationFields } from '@/types/operation';
-import { OperationCompletedType } from '@/types/api/Operation';
 
 import { MutationsTypes } from '@/store/operation/mutations';
 
@@ -56,17 +55,11 @@ export default defineComponent({
   components: {
     ListOperationsItem,
   },
-  props: {
-    listType: {
-      type: Number as PropType<OperationCompletedType>,
-      default: OperationCompletedType.COMPLETED,
-    },
-  },
-  setup(props) {
+  setup() {
     const { dispatch, state, commit } = useStore();
 
     const selectedSort = reactive({
-      field: 'date',
+      field: SortableOperationFields.DATE,
       sort: SortTypes.ASC,
     });
 
@@ -79,11 +72,18 @@ export default defineComponent({
 
     const listOperations = computed(() =>
       state.operation.listOperations.filter(
-        (el) => el.completed === props.listType,
+        (el) => el.completed === state.operation.operationsType,
       ),
     );
 
     const sortTypes = computed(() => SortTypes);
+
+    const sortOperationList = () => {
+      commit(MutationsTypes.SORT_LIST_OPERATIONS, {
+        field: selectedSort.field,
+        sort: selectedSort.sort,
+      });
+    };
 
     const onChangeSort = (field: SortableOperationFields, canSort: boolean) => {
       if (!canSort) {
@@ -98,20 +98,16 @@ export default defineComponent({
         selectedSort.field = field;
       }
 
-      commit(MutationsTypes.SORT_LIST_OPERATIONS, {
-        field,
-        sort: selectedSort.sort,
-      });
+      sortOperationList();
     };
 
     onMounted(async () => {
       await dispatch(ActionTypes.GET_LIST_OPERATIONS);
 
-      commit(MutationsTypes.SORT_LIST_OPERATIONS, {
-        field: SortableOperationFields.DATE,
-        sort: SortTypes.ASC,
-      });
+      sortOperationList();
     });
+
+    watch(() => listOperations.value.length, sortOperationList);
 
     return {
       headers,

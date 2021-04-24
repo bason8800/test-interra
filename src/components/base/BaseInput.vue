@@ -12,8 +12,6 @@
       type="text"
       @input="$emit('update:modelValue', $event.target.value)"
     />
-
-    <span v-if="useCalendar" class="base-input__calendar-icon"></span>
   </div>
 </template>
 
@@ -29,13 +27,13 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    useCalendar: {
-      type: Boolean,
-      default: false,
-    },
     modelValue: {
       type: [String, Number],
       default: '',
+    },
+    useDatepicker: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {
@@ -49,8 +47,20 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+@mixin input {
+  width: 100%;
+  padding: 0;
+  font-size: $font-size-5;
+  color: $color-black;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: $color-grey-5;
+  }
+}
+
 .base-input {
-  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -67,26 +77,7 @@ export default defineComponent({
   }
 
   &__input {
-    width: 100%;
-    padding: 0;
-    font-size: $font-size-5;
-    color: $color-black;
-    border: none;
-    outline: none;
-
-    &::placeholder {
-      color: $color-grey-5;
-    }
-  }
-
-  &__calendar-icon {
-    position: absolute;
-    top: 15px;
-    right: 11px;
-    width: 15px;
-    height: 15px;
-    cursor: pointer;
-    background: url('/calendar.svg') no-repeat center;
+    @include input;
   }
 }
 </style>

@@ -32,7 +32,7 @@ export const actions: ActionTree<State, RootState> & Actions = {
   },
 
   async [ActionTypes.ADD_OR_UPDATE_OPERATION](context, payload) {
-    await fieldService.saveOperation(payload);
-    context.commit(MutationsTypes.ADD_OR_UPDATE_OPERATION, payload);
+    const operation = await fieldService.saveOperation(payload);
+    context.commit(MutationsTypes.ADD_OR_UPDATE_OPERATION, operation);
   },
 };

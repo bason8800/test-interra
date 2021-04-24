@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, computed, PropType } from 'vue';
 import format from 'date-fns/format';
 import ru from 'date-fns/locale/ru';
 
@@ -20,14 +20,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const date = new Date(
-      props.date.year,
-      props.date.month - 1,
-      props.date.day,
-    );
+    const formatDate = computed(() => {
+      const date = new Date(
+        props.date.year,
+        props.date.month - 1,
+        props.date.day,
+      );
 
-    const formatDate = format(date, 'd MMM yy', {
-      locale: ru,
+      return format(date, 'd MMM yy', {
+        locale: ru,
+      });
     });
 
     return {
