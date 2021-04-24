@@ -8,9 +8,10 @@
 
         <div class="operation-form__value">
           <BaseSelect
-            v-model="operation.type"
             label="Операция"
             :options="options"
+            :model-value="operation.type"
+            @update:modelValue="operation.type = +$event"
           />
         </div>
 
