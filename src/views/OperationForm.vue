@@ -146,12 +146,12 @@ export default defineComponent({
     const options = computed(() => {
       const res = [] as OptionsList;
 
-      for (const value of enumKeys(OperationType)) {
+      enumKeys(OperationType).forEach((value) => {
         res.push({
           label: locale[value],
           value: OperationType[value],
         });
-      }
+      });
 
       return res;
     });
