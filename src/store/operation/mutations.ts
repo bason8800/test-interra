@@ -48,8 +48,8 @@ export const mutations: MutationTree<State> & Mutations<State> = {
         elOne = createDate(a[field] as TDate);
         elTwo = createDate(b[field] as TDate);
       } else {
-        elOne = a[field] ?? 3;
-        elTwo = b[field] ?? 3;
+        elOne = a[field] ?? 'empty';
+        elTwo = b[field] ?? 'empty';
       }
 
       if (elOne === elTwo) {

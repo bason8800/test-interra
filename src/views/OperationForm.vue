@@ -77,6 +77,7 @@ import { enumKeys } from '@/helpers';
 import { fieldService } from '@/api';
 import { locale } from '@/locales/ru';
 import { useStore } from '@/store';
+import { routesList } from '@/router/routes';
 
 import BaseButton from '@/components/base/BaseButton.vue';
 import BaseDrawer from '@/components/base/BaseDrawer.vue';
@@ -187,7 +188,7 @@ export default defineComponent({
 
     const onAddOrUpdateOperation = async () => {
       await dispatch(ActionTypes.ADD_OR_UPDATE_OPERATION, operation.value);
-      router.push('/');
+      router.push(routesList.operations.path);
     };
 
     const onChangeDate = (date: Date) => {

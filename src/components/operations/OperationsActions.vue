@@ -26,9 +26,10 @@ import { useRouter } from 'vue-router';
 import { useStore } from '@/store';
 
 import { OperationCompletedType } from '@/types/operation';
+import { MutationsTypes } from '@/store/operation/mutations';
+import { routesList } from '@/router/routes';
 
 import BaseButton from '@/components/base/BaseButton.vue';
-import { MutationsTypes } from '@/store/operation/mutations';
 
 export default defineComponent({
   name: 'OperationsActions',
@@ -55,7 +56,7 @@ export default defineComponent({
     };
 
     const onAddNewOperation = () => {
-      router.push('/add-operation');
+      router.push(routesList.addOperation.path);
     };
 
     return {

@@ -1,10 +1,16 @@
+enum RoutesKeys {
+  operations = 'operations',
+  editOperation = 'editOperation',
+  addOperation = 'addOperation',
+}
+
 type Route = {
   name: string;
   path: string;
 };
 
 type RoutesList = {
-  [key: string]: Route;
+  [key in RoutesKeys]: Route;
 };
 
 export const routesList: RoutesList = {

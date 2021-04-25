@@ -29,6 +29,7 @@ import { locale } from '@/locales/ru.ts';
 
 import BaseDate from '@/components/base/BaseDate.vue';
 import OperationQuality from '@/components/operations/OperationQuality.vue';
+import { getEditOperationRoutePath } from '@/helpers';
 
 export default defineComponent({
   name: 'ListOperationsItem',
@@ -46,7 +47,9 @@ export default defineComponent({
     const router = useRouter();
 
     const onChangeRoute = () => {
-      router.push(`/edit-operation/${props.operation.id}`);
+      if (props.operation.id) {
+        router.push(getEditOperationRoutePath(props.operation.id));
+      }
     };
 
     const operationName = computed(
