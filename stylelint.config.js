@@ -3,10 +3,10 @@ module.exports = {
   rules: {
     'no-empty-source': null,
     'at-rule-no-unknown': null,
-    'selector-pseudo-element-no-unknown': [
+    'selector-pseudo-class-no-unknown': [
       true,
       {
-        ignorePseudoElements: ['deep'],
+        ignorePseudoClasses: ['deep'],
       },
     ],
   },

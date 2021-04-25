@@ -57,7 +57,7 @@ export default defineComponent({
     opacity: 0.7;
   }
 
-  /deep/ &__calendar {
+  :deep() &__calendar {
     width: 100%;
     padding: 0;
     font-size: $font-size-5;
