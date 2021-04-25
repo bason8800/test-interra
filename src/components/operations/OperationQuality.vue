@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue';
-import { Assessment } from '@/types/api/Operation';
+import { Assessment } from '@/types/operation';
 
 import { locale } from '@/locales/ru';
 

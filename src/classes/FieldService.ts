@@ -3,7 +3,7 @@ import {
   Assessment,
   OperationCompletedType,
   OperationType,
-} from '@/types/api/Operation';
+} from '@/types/operation';
 
 export class FieldService {
   private operations: Array<Operation> = [

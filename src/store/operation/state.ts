@@ -1,5 +1,5 @@
-import { ListOperations } from '@/types/api/Operation';
-import { OperationCompletedType } from '@/types/api/Operation';
+import { ListOperations } from '@/types/operation';
+import { OperationCompletedType } from '@/types/operation';
 
 export type State = {
   listOperations: ListOperations;

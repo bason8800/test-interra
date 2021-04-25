@@ -65,7 +65,7 @@ import {
   Assessment,
   OperationCompletedType,
   OperationType,
-} from '@/types/api/Operation';
+} from '@/types/operation';
 
 import { Field, QualityItem } from '@/types/operation';
 import { OptionsList } from '@/types';

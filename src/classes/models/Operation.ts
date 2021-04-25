@@ -3,7 +3,7 @@ import {
   Assessment,
   OperationType,
   OperationCompletedType,
-} from '@/types/api/Operation';
+} from '@/types/operation';
 
 export class Operation {
   id?: string | null; // ID Операции

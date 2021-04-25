@@ -23,7 +23,7 @@
 import { defineComponent, computed, PropType } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { OperationType } from '@/types/api/Operation';
+import { OperationType } from '@/types/operation';
 import { Operation } from '@/classes/models/Operation';
 import { locale } from '@/locales/ru.ts';
 

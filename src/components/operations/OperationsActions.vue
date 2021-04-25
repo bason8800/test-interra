@@ -25,7 +25,7 @@ import { computed, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '@/store';
 
-import { OperationCompletedType } from '@/types/api/Operation';
+import { OperationCompletedType } from '@/types/operation';
 
 import BaseButton from '@/components/base/BaseButton.vue';
 import { MutationsTypes } from '@/store/operation/mutations';

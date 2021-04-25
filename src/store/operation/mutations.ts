@@ -2,7 +2,7 @@ import { MutationTree } from 'vuex';
 
 import { SortTypes } from '@/types';
 import { SortableOperationFields } from '@/types/operation';
-import { ListOperations, OperationCompletedType } from '@/types/api/Operation';
+import { ListOperations, OperationCompletedType } from '@/types/operation';
 
 import { State } from '@/store/operation/state';
 import { TDate } from '@/classes/models/TDate';

@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { QualityList } from '@/types/operation';
-import { Assessment } from '@/types/api/Operation';
+import { Assessment } from '@/types/operation';
 
 const MAX_NAME_LENGTH = 7;
 
